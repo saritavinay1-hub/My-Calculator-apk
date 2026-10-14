@@ -3,19 +3,22 @@ name: Build APK
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Build with Buildozer
-        uses: 0x10n/buildozer-action@v4
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
         with:
-          command: android debug
-          buildozer_version: master
+          command: buildozer android debug
+          buildozer_version: stable
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
